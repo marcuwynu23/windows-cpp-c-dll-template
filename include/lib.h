@@ -13,8 +13,9 @@ extern "C"{
 
 
 
-//for export functions
+//for export functions initiation
 void hello(void);
+void printNumber(int number);
 
 
 #ifdef __cplusplus
