@@ -11,3 +11,5 @@
 *.lib.a
 *.lib.so
 *.lib.dylib
+node_modules/
+*.class
