@@ -1,0 +1,7 @@
+{
+  "name": "dll-loader-scripts",
+  "private": true,
+  "dependencies": {
+    "koffi": "^2.8.0"
+  }
+}
