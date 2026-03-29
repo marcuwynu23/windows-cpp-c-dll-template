@@ -1,11 +1,23 @@
-BIN=bin/lib.dll
+# Windows DLL sample — LLVM Clang (not MinGW)
+CXX      := clang++
+CXXFLAGS := -std=c++17 -Wall -Wextra -Iinclude
 
-#compile src to DLL
-all:
-	c++ -I "include" -shared -o $(BIN)  $(wildcard src/*.cpp)
+DLL      := bin/lib.dll
+TEST     := bin/test.exe
+SRC      := $(wildcard src/*.cpp)
 
-#test DLL
-test:
-	c++ bin/test.cpp -o bin/test.exe
-	bin/test.exe
+.PHONY: all clean test
 
+all: $(DLL)
+
+$(DLL): $(SRC) include/lib.h
+	$(CXX) $(CXXFLAGS) -shared -DBUILD_DLL -o $@ $(SRC)
+
+$(TEST): bin/test.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+test: $(DLL) $(TEST)
+	$(TEST)
+
+clean:
+	-del /Q "$(DLL)" "$(TEST)" bin\lib.lib bin\lib.exp 2>nul
