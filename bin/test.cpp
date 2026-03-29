@@ -1,22 +1,28 @@
 #include <windows.h>
 
-//function pointers
-typedef void (*pHelloFunc)(); 
-typedef void (*pPrintNumFunc)(int number); 
+#include <cstdio>
 
+using HelloFn = void (*)();
+using PrintNumFn = void (*)(int);
 
-int main(int argc, char const *argv[])
-{	
-	//loading DLL
-	HMODULE  dll  = LoadLibrary("bin/lib.dll");    
+int main() {
+    HMODULE dll = LoadLibraryW(L"bin\\lib.dll");
+    if (!dll) {
+        std::fprintf(stderr, "LoadLibrary failed: %lu\n", GetLastError());
+        return 1;
+    }
 
-	//clone function from DLL
-	pHelloFunc  		hello = (pHelloFunc) GetProcAddress(dll, "hello"); 
-	pPrintNumFunc  	printNumber = (pPrintNumFunc) GetProcAddress(dll, "printNumber");
+    auto hello = reinterpret_cast<HelloFn>(GetProcAddress(dll, "hello"));
+    auto printNumber = reinterpret_cast<PrintNumFn>(GetProcAddress(dll, "printNumber"));
+    if (!hello || !printNumber) {
+        std::fprintf(stderr, "GetProcAddress failed: %lu\n", GetLastError());
+        FreeLibrary(dll);
+        return 1;
+    }
 
-	// calling function 
-	hello();
-	printNumber(23);
-	
-	return 0;
+    hello();
+    printNumber(23);
+
+    FreeLibrary(dll);
+    return 0;
 }

@@ -1,13 +1,7 @@
 #include <iostream>
+
 #include "lib.h"
 
+void hello() { std::cout << "Hello World!\n"; }
 
-//functions implementation
-
-void hello(){
-	std::cout << "Hello World!" << std::endl;
-}
-
-void printNumber(int number){
-	std::cout << "number: " << number << std::endl;
-}
+void printNumber(int number) { std::cout << "number: " << number << '\n'; }
