@@ -10,4 +10,10 @@ Other good names: `cpp-windows-dll-template`, `win32-dll-library-starter`.
 
 - [LLVM](https://llvm.org/) — `clang++` on `PATH` (C++ sources); use `clang` for plain C if you add `.c` files
 - `make` (e.g. from Git for Windows)
-- Run `make test` from the repo root so `bin\lib.dll` resolves correctly
+- The loader looks for `lib.dll` **next to the executable** (works from any working directory)
+
+## Loaders (C, C++, Python, Node, Java)
+
+See **[bin/README.md](bin/README.md)** for how to build and run **`test.c`**, **`test.cpp`**, **`test.py`**, **`test.js`**, and **`test.java`** against `lib.dll`.
+
+Quick checks from the repo root: `make test` (C++), `make test-c` (C).
